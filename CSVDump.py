@@ -12,6 +12,10 @@ def dumpAllFlowerPower(api, since="born", until="today"):
 
     sensorDataSync = api.getSensorDataSync()
     print sensorDataSync
+    
+    print "End of SensorDataSync      ----------------------------------------------"
+    print
+    
     for location in sensorDataSync["locations"]:
         err = dumpFlowerPower(api, location, since, until)
         if (err == -1):
@@ -28,13 +32,17 @@ def dumpFlowerPower(api, location, since, until):
         since = until - timedelta(days=7)
     else:
         since = datetime.strptime(since, dateFormat)
-
+      
+    print location['latitude']
+    print location['longitude']
+    
     if (since > until):
         return -1
+   
     elif (location['sensor']):
         print "Dump " + location['sensor']['sensor_identifier']+ location['sensor']['firmware_version'] + '.csv'
         print " location_identifier "+location['location_identifier']
-
+       
         print " From: " + str(since)[:19]
         print " To:   " + str(until)[:19]
         fileCsv = csv.writer(open(location['sensor']['sensor_identifier'] + ".csv", "w"))
