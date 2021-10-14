@@ -1,0 +1,4 @@
+FROM python:2-onbuild
+COPY *.py /home/
+ENTRYPOINT ["python"]
+CMD ["/home/register.py" ]
